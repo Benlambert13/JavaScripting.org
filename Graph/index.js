@@ -1,4 +1,5 @@
 //Function === f(x)= (x^2 + 9x + 20) / (x + 4)
+let QudraticFunction = require('./js/QuadraticFunction');
 
 const canvas = document.createElement('canvas'); // document.createElement
 canvas.style.height = '1000px';
@@ -22,3 +23,5 @@ class Point {
     get x() {return this.x};
     get y() {return this.y};
 }
+
+const fn = new QudraticFunction()
