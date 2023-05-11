@@ -5,9 +5,10 @@ import Complex from 'complex.js';
  */
 class QudraticFunction
 {
-    public functionString: string;
+    public readonly functionString: string;
     readonly linearCoefficient: number;
     readonly constantCoefficient: number;
+    readonly fn: Function;
     private readonly C = (a: number, b = 0) => new Complex(a, b);
 
     constructor(b: number, c: number)
@@ -15,6 +16,7 @@ class QudraticFunction
         this.linearCoefficient = b;
         this.constantCoefficient = c;
         this.functionString = `x^2${b < 0 ? ` - ${b}x` : b > 0 ? ` + ${b}x` : ''}${c < 0 ? ` - ${c}` : c > 0 ? ` + ${c}` : ''}`;
+        this.fn = (x: number) => (x**2) + (b * x) + (c);
     }
 
     /**
@@ -42,5 +44,26 @@ class QudraticFunction
         // Complex roots
         let D = sqrt(-d);
         return [[this.C(-this.linearCoefficient / 2, D / 2), 1], [this.C(-this.linearCoefficient / 2, -D / 2), 1]];
+    }
+
+    /**
+     * @returns {(number|null)[]} an array of 2 values. The first element being the horizontal asymptote in the negative x direction (or null if there isn't one) and the second being the asymptote in the positive x direction (or null if there isn't one).
+     *
+     */
+    public getHorizontalAsymptotes(): (number|null)[] {
+        const res = [null, null];
+
+        const negLimit = this.fn(-Infinity);                         // A horizontal asymptote is just the limit of the function, f(x), as x approaches
+        const posLimit = this.fn(Infinity);                          // infinity in both the positive and negative directions.
+
+        if (negLimit != Infinity && negLimit != -Infinity) {
+            res[0] = negLimit;
+        }
+
+        if (posLimit != Infinity && posLimit != -Infinity) {
+            res[1] = posLimit;
+        }
+
+        return res;
     }
 }
