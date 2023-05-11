@@ -54,10 +54,10 @@ class QudraticFunction
         const res = [null, null];
 
         const negLimit = this.fn(-Infinity);                         // A horizontal asymptote is just the limit of the function, f(x), as x approaches
-        const posLimit = this.fn(Infinity);                          // infinity in both the positive and negative directions.
-
-        if (negLimit != Infinity && negLimit != -Infinity) {
-            res[0] = negLimit;
+        const posLimit = this.fn(Infinity);                          // infinity in both the positive and negative directions. If the function diverges,
+                                                                     // that is, the limit is Infinity as x approaches Infinity, than an asymptote does
+        if (negLimit != Infinity && negLimit != -Infinity) {         // not exist in that directions. If the function converges to a finite value however,
+            res[0] = negLimit;                                       // than that limit is an asymptote
         }
 
         if (posLimit != Infinity && posLimit != -Infinity) {
